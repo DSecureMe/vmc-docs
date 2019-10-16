@@ -1,2 +1,1 @@
-# vmcDocs
-Documentation of vmc
+Coming soon. 
