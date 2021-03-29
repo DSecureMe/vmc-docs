@@ -73,17 +73,29 @@ docker pull dsecureme/vmc:tagname
 ###  [Configuration](./Configuration/README.md)
 #### [Installation on a virtual machine](./Configuration/README.md#installation-on-a-virtual-machine)
 #### [Installation using the docker](./Configuration/README.md#installation-using-the-docker)
+
 ###  [Architecture](./Architecture/README.md)
 #### [Knowledge Collector](./Architecture/README.md#knowledge-collector)
 #### [Asset Collector](./Architecture/README.md#asset-collector)
 #### [Vulnerability Collector](./Architecture/README.md#vulnerability-collector)
 #### [Processing Module](./Architecture/README.md#processing-module)
-### Administrator Panel
+
+### [Administration](./Admin-Panel/README.md)
+#### [Adding vulnerability scanners](./Admin-Panel/README.md#adding-vulnerability-scanners)
+#### [Importing data from the scanner](./Admin-Panel/README.md#importing-data-from-the-scanners)
+#### [Disabling and Enabling the Scanner Configuration](./Admin-Panel/README.md#disabling-and-enabling-the-scanner-configurations)
+#### [Adding an IT resource management database](./Admin-Panel/README.md#adding-an-it-resource-management-database)
+#### [Data import from an IT resource management database](./Admin-Panel/README.md#data-import-from-an-it-resource-management-database)
+#### [Creation of API Tokens](./Admin-Panel/README.md#creation-of-api-tokens)
+#### [Support for Multiple Organizations or Groups](./Admin-Panel/README.md#support-for-multiple-organizations-or-groups)
+
 ### API
 ### [Integration with the IT Asset Management](./AM-integration/README.md)
+
 ### [Integration with The Hive](./HIVE-Integration/README.md)
 #### [ElastAlert configuration](./HIVE-Integration/README.md#elastalert-configuration)
 #### [Creating Alerts](./HIVE-Integration/README.md#creating-alerts)
 #### [Responder configuration](./HIVE-Integration/README.md#responder-configuration)
 #### [The Hive webhooks Configuration](./HIVE-Integration/README.md#the-hive-webhooks-configuration)
+
 ### [Introduction to KPI](./KPI/README.md)
