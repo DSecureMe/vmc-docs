@@ -1,4 +1,4 @@
-# Administrator Panel
+# Administration
 The operations that are performed in the context of the VMC administrator to configure and add parameters necessary for the proper functioning of the system are discussed below. Configuration changes are made at the url `http://VMC_address`, where VMC_address is the dedicated domain or IP address of the machine where the software is installed.
 
 ![Login page to the VMC admin panel](./login.png)
