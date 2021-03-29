@@ -41,7 +41,8 @@ In the Settings / Custom Fields tab, select the "Add custom field" button and en
 ![Required information for fields C/I/A](./3.png)
 
 ## Creating custom fields for os
-In the custom field adding field, create a field called **os**. This field takes a string value and corresponds to the object attributes describing the operating system together with the exact version.
+In the custom field adding field, create a field called **os**. This field takes a string value and corresponds to the object attributes describing the operating system together with the exact version.  
+
 ![Sample](./4.png)
 
 ## Setting up service fields, service owners, and resource environment
