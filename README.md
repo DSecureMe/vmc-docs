@@ -73,6 +73,9 @@ docker pull dsecureme/vmc:tagname
 ###  Configuration
 ###  [Architecture](./Architecture/Architecture.md)
 #### [Knowledge Collector](./Architecture/Architecture.md#knowledge-collector)
+#### [Asset Collector](./Architecture/Architecture.md#asset-collector)
+#### [Vulnerability Collector](./Architecture/Architecture.md#vulnerability-collector)
+#### [Processing Module](./Architecture/Architecture.md#processing-module)
 ###  Administrator Panel
 ###  API
 ###  Integration with the IT asset management base
