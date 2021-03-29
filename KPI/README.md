@@ -7,9 +7,11 @@ The data is presented on Dashboards that can be created on the basis of a specif
 Select the Dashboard from the menu on the left in the Dashboard tab.
 ![Step 1](./step_1.png)
 
-Then, to create a new one, click **Create dashboard**.
-![Step 2](./step_2.png)
-![Step_3](./step_3.png)
+Then, to create a new one, click **Create dashboard**.  
+
+![Step 2](./step_2.png) 
+
+![Step_3](./step_3.png) 
 
 When creating a new metric, we choose the method of data visualization.
 ![Visualization types](./step_4.png)
