@@ -70,11 +70,11 @@ docker pull dsecureme/vmc:tagname
 
 
 ## Table of Contents
-### 1. Configuration
-### 2. [Architecture](./Architecture/Architecture.md)
-#### 2.1 [Knowledge Collector](./Architecture/Architecture.md#knowledge-collector)
-### 3. Administrator Panel
-### 4. API
-### 5. Integration with the IT asset management base
-### 6. Integration with The Hive
-### 7. Introduction to KPI
+###  Configuration
+###  [Architecture](./Architecture/Architecture.md)
+#### [Knowledge Collector](./Architecture/Architecture.md#knowledge-collector)
+###  Administrator Panel
+###  API
+###  Integration with the IT asset management base
+###  Integration with The Hive
+### Introduction to KPI
