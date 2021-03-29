@@ -1,5 +1,5 @@
 # API
-To enable integration with other tools, VMC provides the REST API interface. Creating tokens allowing for correct authorization is described in chapter [Creation of API Tokens]().
+To enable integration with other tools, VMC provides the REST API interface. Creating tokens allowing for correct authorization is described in chapter [Creation of API Tokens](https://github.com/DSecureMe/vmc-docs/tree/master/Admin-Panel#creation-of-api-tokens).
 
 ## Downloading the connection configuration to the resource base
 Endpoint allows you to download the configuration of the integrated resource base.
