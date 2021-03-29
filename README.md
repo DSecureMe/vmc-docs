@@ -78,8 +78,8 @@ docker pull dsecureme/vmc:tagname
 #### [Asset Collector](./Architecture/README.md#asset-collector)
 #### [Vulnerability Collector](./Architecture/README.md#vulnerability-collector)
 #### [Processing Module](./Architecture/README.md#processing-module)
-###  Administrator Panel
-###  API
-###  Integration with the IT asset management base
-###  Integration with The Hive
-### Introduction to KPI
+### Administrator Panel
+### API
+### Integration with the IT asset management base
+### Integration with The Hive
+### [Introduction to KPI](./KPI/README.md)
