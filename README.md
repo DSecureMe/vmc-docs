@@ -70,12 +70,14 @@ docker pull dsecureme/vmc:tagname
 
 
 ## Table of Contents
-###  Configuration
-###  [Architecture](./Architecture/Architecture.md)
-#### [Knowledge Collector](./Architecture/Architecture.md#knowledge-collector)
-#### [Asset Collector](./Architecture/Architecture.md#asset-collector)
-#### [Vulnerability Collector](./Architecture/Architecture.md#vulnerability-collector)
-#### [Processing Module](./Architecture/Architecture.md#processing-module)
+###  [Configuration](./Configuration/README.md)
+#### [Installation on a virtual machine](./Configuration/README.md#installation-on-a-virtual-machine)
+#### [Installation using the docker](./Configuration/README.md#installation-using-the-docker)
+###  [Architecture](./Architecture/README.md)
+#### [Knowledge Collector](./Architecture/README.md#knowledge-collector)
+#### [Asset Collector](./Architecture/README.md#asset-collector)
+#### [Vulnerability Collector](./Architecture/README.md#vulnerability-collector)
+#### [Processing Module](./Architecture/README.md#processing-module)
 ###  Administrator Panel
 ###  API
 ###  Integration with the IT asset management base
