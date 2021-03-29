@@ -89,7 +89,7 @@ docker pull dsecureme/vmc:tagname
 #### [Creation of API Tokens](./Admin-Panel/README.md#creation-of-api-tokens)
 #### [Support for Multiple Organizations or Groups](./Admin-Panel/README.md#support-for-multiple-organizations-or-groups)
 
-### API
+### [API](./API/README.md)
 ### [Integration with the IT Asset Management](./AM-integration/README.md)
 
 ### [Integration with The Hive](./HIVE-Integration/README.md)
