@@ -1,4 +1,4 @@
-# Integration with the IT asset management base
+# Integration with the IT Asset Management
 After successfully connecting to the Ralph asset management database, care should be taken to provide the necessary data describing the attributes of the resource. The introduction of these data will allow for effective management of vulnerabilities and resources, and for the construction of various rules, thanks to which it will be possible to use the full potential of the solution.
 
 ## Recommended fields
