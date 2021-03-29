@@ -81,5 +81,9 @@ docker pull dsecureme/vmc:tagname
 ### Administrator Panel
 ### API
 ### [Integration with the IT Asset Management](./AM-integration/README.md)
-### Integration with The Hive
+### [Integration with The Hive](./HIVE-Integration/README.md)
+#### [ElastAlert configuration](./HIVE-Integration/README.md#elastalert-configuration)
+#### [Creating Alerts](./HIVE-Integration/README.md#creating-alerts)
+#### [Responder configuration](./HIVE-Integration/README.md#responder-configuration)
+#### [The Hive webhooks Configuration](./HIVE-Integration/README.md#the-hive-webhooks-configuration)
 ### [Introduction to KPI](./KPI/README.md)
