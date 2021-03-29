@@ -80,6 +80,6 @@ docker pull dsecureme/vmc:tagname
 #### [Processing Module](./Architecture/README.md#processing-module)
 ### Administrator Panel
 ### API
-### Integration with the IT asset management base
+### [Integration with the IT asset management base](./AM-integration/README.md)
 ### Integration with The Hive
 ### [Introduction to KPI](./KPI/README.md)
