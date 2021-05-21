@@ -1,6 +1,6 @@
 # VMC Documentation
 ## Introduction
-The purpose of this document is to present the results of the implementation of the Vulnerability Management Center (VMC) platform, supporting the process of managing vulnerabilities in the client's infrastructure.
+The purpose of this document is to present the results of the implementation of the OWASP Vulnerability Management Center (VMC) platform, supporting the process of managing vulnerabilities in the client's infrastructure.
 
 This document presents the design of the VMC platform, describes the requirements, installation, architecture and introduces the administrator panel of the VMC platform.
 
