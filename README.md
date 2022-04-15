@@ -34,6 +34,13 @@ The software listed in Table below is required for the correct operation of the 
 | Elasticsearch|  7.5             |https://www.elastic.co/elasticsearch/                                         |
 | Postgresql   | 11.5             |https://www.postgresql.org/                                                   |
 
+### Supported Scanners
+| Name    | Version                       |
+|---------|-------------------------------|
+| Nessus  | 7.x                           |
+| Nessus  | 8.x                           |
+| OpenVas | with GVM protocol version 9.0 |
+| OpenVas | with OMP protocol version 7.0 |
 
 ## Installation
 The architecture of the VMC software allows to run in any environment, depending on the demand. This can be a public cloud, private cloud, physical server, or virtual machine. All available installation methods are described in the following chapter.

@@ -41,6 +41,50 @@ The config “*The name of the scanner instance*” was added successfully.
 
 ![A message confirming that the configuration has been added successfully](6.png)
 
+---
+<span style="color:red">**_NOTE:_**</span> 
+
+By default, GVM listens on the unix socket, so in order to connect VMC with OpenVas you have to improve your gvmd configuration.
+In the file `/etc/lib/systemd/system/gvmd.service` change the line:
+```
+ExecStart=/usr/sbin/gvmd --osp-vt-update=/run/ospd/ospd.sock --listen-group=_gvmchange
+```
+to:
+```
+ExecStart=/usr/sbin/gvmd --osp-vt-update=/run/ospd/ospd.sock --listen-group=_gvm --listen 0.0.0.0 --port 9390
+```
+then reload and restart gvmd:
+```
+systemctl daemon-reload 
+systemctl restart  gvmd.service
+```
+
+a new port should appear:
+![image](https://user-images.githubusercontent.com/673031/163448870-c703fe02-bb0c-45df-8ae5-a4bbd0e8ea10.png)
+
+VMC openvas configuration should look like this:
+![image](https://user-images.githubusercontent.com/673031/163449032-b599c1c2-950c-4b98-9357-c005b10817ea.png)
+```
+ExecStart=/usr/sbin/gvmd --osp-vt-update=/run/ospd/ospd.sock --listen-group=_gvmchange
+```
+to:
+```
+ExecStart=/usr/sbin/gvmd --osp-vt-update=/run/ospd/ospd.sock --listen-group=_gvm --listen 0.0.0.0 --port 9390
+```
+then reload daemon and restart gvmd:
+```
+systemctl daemon-reload 
+systemctl restart gvmd.service
+```
+
+a new port should appear:
+![image](https://user-images.githubusercontent.com/673031/163448870-c703fe02-bb0c-45df-8ae5-a4bbd0e8ea10.png)
+
+The VMC configuration for OpenVas should look like this:
+![image](https://user-images.githubusercontent.com/673031/163449032-b599c1c2-950c-4b98-9357-c005b10817ea.png)
+
+---
+
 ## Importing data from the scanner
 To load data from a correctly added scanner, go to the **Scanners/Configs** tab, select the checkbox next to the previously added scanner from which you want to import data and select the **Import selected configs** option from the list, and then click **GO**.
 
