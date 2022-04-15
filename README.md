@@ -35,6 +35,8 @@ The software listed in Table below is required for the correct operation of the 
 | Postgresql   | 11.5             |https://www.postgresql.org/                                                   |
 
 ### Supported Scanners
+The software listed in Table below is optional for the correct operation of the VMC Platform
+
 | Name    | Version                       |
 |---------|-------------------------------|
 | Nessus  | 7.x                           |
