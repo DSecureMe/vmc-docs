@@ -198,3 +198,26 @@ rabbitmq.port: 5672
 secret_key: " random 52 characters, ex: jk&e^6%5@^5!^1jq8#vd2g^@8w9g5#i_v*ho!#mx%y7%5fuz9%"
 #debug: true
 ```
+
+
+### **Warning!**  
+In the **docker-compose.yml** file, you can mount a file as a **read-only volume** in the container using the **`:ro`** syntax.  
+
+### **Example of mounting a file as read-only in Docker Compose:**  
+
+```yaml
+version: '3.8'
+
+services:
+  app:
+    image: myapp:latest
+    volumes:
+      - ./config.yml:/etc/app/config.yml:ro
+```
+
+### **Explanation:**  
+- **./config.yml** – the file located on the host  
+- **/etc/app/config.yml** – the path where the file will be available inside the container  
+- **`:ro`** – specifies that the file is mounted as read-only  
+
+This ensures that the application inside the container can read the file but cannot modify it.
