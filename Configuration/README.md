@@ -1,4 +1,8 @@
 # Configuration
+
+## Warning!
+After installing the software and configuring all files as described in this documentation, verify their permissions. For example, the file /etc/vmc/config.yml may have default permissions rw-r--r--, due to the default behavior of umask in Linux. To enhance security, these permissions should be changed to rw------- (command: chmod 600 /etc/vmc/config.yml).
+
 ## Installation on a virtual machine
 To be able to manage VMC from the level of systemctl, the following configuration files should be added to the directory `/etc/systemd/system`:
 
