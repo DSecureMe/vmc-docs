@@ -1,0 +1,3 @@
+# Local-only tooling kept out of the published documentation repo.
+scripts/
+SCREENSHOTS.md
