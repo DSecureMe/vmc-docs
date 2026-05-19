@@ -1,110 +1,143 @@
-# OWASP Vulnerability Management Center Documentation
+# OWASP Vulnerability Management Center — Documentation
+
 ## Introduction
-The purpose of this document is to present the results of the implementation of the OWASP Vulnerability Management Center (VMC) platform, supporting the process of managing vulnerabilities in the client's infrastructure.
 
-This document presents the design of the VMC platform, describes the requirements, installation, architecture and introduces the administrator panel of the VMC platform.
+This document presents the OWASP Vulnerability Management Center (VMC)
+platform — its design, the requirements for running it, the installation
+options, the architecture and the administration panel.
 
-## VMC Platform
-Vulnerability Management Center (VMC) is a tool that facilitates and supports the process of managing vulnerabilities in an organization. The tool integrates with infrastructure elements such as: a vulnerability scanner, publicly available knowledge bases on published vulnerabilities, IT resource inventory systems and reporting systems. Thanks to the wide possibilities of data normalization and the transparency of the interface, it presents information on threats in an accessible way and alerts about deviations from the norm and anomalies. The main innovation factor of VMC is the organization's vulnerability analysis, as opposed to the common vulnerability assessment approach without specifying environmental conditions. Thanks to the assessment calculated by the VMC, the cybersecurity team can focus on the most vulnerable elements of the infrastructure in its work, prioritizing repair processes based on the recommendations provided by the tool. In addition, presenting the current state of the infrastructure is possible at any time, in an accessible, user-adapted manner.
+## VMC platform
 
-The architecture of the solution makes it possible to run it in any environment depending on the demand. It can be a public cloud, a private cloud, a physical server, or a virtual machine.
+Vulnerability Management Center (VMC) is a tool that facilitates and supports
+the process of managing vulnerabilities in an organisation. It integrates
+with infrastructure elements such as vulnerability scanners, publicly
+available knowledge bases on published vulnerabilities, IT asset inventory
+systems and reporting platforms. With its data-normalisation capabilities and
+a transparent interface, VMC presents threat information in an accessible way
+and alerts on deviations and anomalies.
+
+The main innovation factor of VMC is *organisation-level* vulnerability
+analysis — as opposed to the common per-host vulnerability assessment that
+ignores environmental conditions. Thanks to the environmental score computed
+by VMC, the cybersecurity team can focus on the most exposed elements of the
+infrastructure, prioritising remediation based on the tool's recommendations.
+
+The architecture allows VMC to run in any environment — a public cloud, a
+private cloud, a physical server or a virtual machine.
 
 ## Requirements
-The following chapter describes the VMC requirements.
 
-### Hardware requirements
-The minimum resources listed in Table below are required for the proper operation of the VMC platform
+### Hardware
 
-|Hardware|1-n (depending on the required configuration)|
-|--------|---------------------------------------------|
-| RAM    |minimum 8 GB                                 |
-| Storage|minimum 30 GB for every machine              |
-| CPU    |minimum 4                                    |
+The minimum hardware footprint required for the platform to run correctly:
 
-### Required Software
-The software listed in Table below is required for the correct operation of the VMC Platform
+| Resource | Minimum                          |
+|----------|----------------------------------|
+| RAM      | 8 GB                             |
+| Storage  | 30 GB per machine                |
+| CPU      | 4 cores                          |
 
-|Name          |Minimum version   | Description|
-|--------------|------------------|------------------------------------------------------------------------------|
-| Linux OS     | Centos 7/Debian 9|                                                                              |
-| Python3      |  3.5             |                                                                              |
-| Nginx        |                  |https://www.nginx.com/ (applies to the server on which VMC Admin is running)  |
-| Redis        |  5.0             |https://redis.io/                                                             |
-| Rabbitmq     |  3.7             |https://www.rabbitmq.com/                                                     |
-| Elasticsearch|  7.5             |https://www.elastic.co/elasticsearch/                                         |
-| Postgresql   | 11.5             |https://www.postgresql.org/                                                   |
+### Software
 
-### Supported Scanners
-The software listed in Table below is optional for the correct operation of the VMC Platform
+| Name           | Minimum version                                                                | Description                                                                |
+|----------------|--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| Linux OS       | Debian 12 (Bookworm) / RHEL 9 / Ubuntu 22.04 (any modern Linux with Docker)    | Host OS.                                                                   |
+| Python 3       | 3.10                                                                           | Application runtime.                                                       |
+| Nginx          | any current release                                                            | <https://www.nginx.com/> — proxy in front of the VMC admin.                |
+| Redis          | 6.2                                                                            | <https://redis.io/>                                                        |
+| RabbitMQ       | 3.12                                                                           | <https://www.rabbitmq.com/>                                                |
+| Elasticsearch  | 7.17                                                                           | <https://www.elastic.co/elasticsearch/>                                    |
+| Kibana         | 7.17                                                                           | <https://www.elastic.co/kibana/>                                           |
+| PostgreSQL     | 15                                                                             | <https://www.postgresql.org/>                                              |
+
+### Supported scanners
+
+The following vulnerability scanners are supported (optional for installation):
 
 | Name    | Version                       |
 |---------|-------------------------------|
 | Nessus  | 7.x                           |
 | Nessus  | 8.x                           |
-| OpenVas | with GVM protocol version 9.0 |
-| OpenVas | with OMP protocol version 7.0 |
+| OpenVAS | GVM protocol version 9.0      |
+| OpenVAS | OMP protocol version 7.0      |
 
 ## Installation
-The architecture of the VMC software allows to run in any environment, depending on the demand. This can be a public cloud, private cloud, physical server, or virtual machine. All available installation methods are described in the following chapter.
 
-### Installation on a virtual machine
-#### Installing from the source code
-To install VMC from source code, execute the following commands on each server instance:
-```
+### On a virtual machine
+
+#### From source
+
+```bash
 git clone https://github.com/DSecureMe/vmc.git
 cd vmc
-python3 setup.py build
-python3 setup.py install
+pip3 install .
 ```
 
-#### Installation Using the Package Manager
-It is also possible to install VMC from the Python package manager using the command:
-```
+#### From PyPI
+
+```bash
 pip3 install vmcenter
 ```
 
-### Installation using the docker
-If you need to build your own image with a specific VMC version, follow the steps below. The minimum supported docker version is 19.03 (multistage build support).
+> [!NOTE]
+> The `vmcenter` release on PyPI may lag the latest source by one or more
+> cycles. For the most recent code (post-modernisation), prefer the git
+> checkout above.
 
-```
+### Using Docker
+
+If you want to build your own image with a specific VMC version:
+
+```bash
 git clone https://github.com/DSecureMe/vmc-docker
 cd vmc-docker
 make build
 ```
-#### Downloading an image from Docker Hub
-The official VMC image can be downloaded from [Docker Hub](https://hub.docker.com/repository/docker/dsecureme/vmc).
-```
+
+The official VMC image is available on
+[Docker Hub](https://hub.docker.com/repository/docker/dsecureme/vmc):
+
+```bash
 docker pull dsecureme/vmc:tagname
 ```
 
+For a turnkey demo (admin + scheduler + worker + Postgres + Elasticsearch +
+Kibana + Ralph + TheHive + ElastAlert), use the orchestrator at
+[`vmc-dev-toolkit`](https://github.com/DSecureMe/vmc-dev-toolkit):
 
-## Table of Contents
-###  [Configuration](./Configuration/README.md)
-#### [Installation on a virtual machine](./Configuration/README.md#installation-on-a-virtual-machine)
-#### [Installation using the docker](./Configuration/README.md#installation-using-the-docker)
+```bash
+git clone --recurse-submodules https://github.com/DSecureMe/vmc-dev-toolkit.git
+cd vmc-dev-toolkit
+make up all=y
+make demodata
+```
 
-###  [Architecture](./Architecture/README.md)
-#### [Knowledge Collector](./Architecture/README.md#knowledge-collector)
-#### [Asset Collector](./Architecture/README.md#asset-collector)
-#### [Vulnerability Collector](./Architecture/README.md#vulnerability-collector)
-#### [Processing Module](./Architecture/README.md#processing-module)
+After `make demodata` succeeds, the admin panel is available at
+<http://localhost:8080/admin/> (credentials: `admin` / `admin`).
 
-### [Administration](./Admin-Panel/README.md)
-#### [Adding vulnerability scanners](./Admin-Panel/README.md#adding-vulnerability-scanners)
-#### [Importing data from the scanner](./Admin-Panel/README.md#importing-data-from-the-scanners)
-#### [Disabling and Enabling the Scanner Configuration](./Admin-Panel/README.md#disabling-and-enabling-the-scanner-configurations)
-#### [Adding an IT resource management database](./Admin-Panel/README.md#adding-an-it-resource-management-database)
-#### [Data import from an IT resource management database](./Admin-Panel/README.md#data-import-from-an-it-resource-management-database)
-#### [Creation of API Tokens](./Admin-Panel/README.md#creation-of-api-tokens)
-#### [Support for Multiple Organizations or Groups](./Admin-Panel/README.md#support-for-multiple-organizations-or-groups)
+## Table of contents
 
-### [API](./API/README.md)
-### [Integration with the IT Asset Management](./AM-integration/README.md)
-
-### [Integration with The Hive](./HIVE-Integration/README.md)
-#### [ElastAlert configuration](./HIVE-Integration/README.md#elastalert-configuration)
-#### [Creating Alerts](./HIVE-Integration/README.md#creating-alerts)
-#### [Responder configuration](./HIVE-Integration/README.md#responder-configuration)
-#### [The Hive webhooks Configuration](./HIVE-Integration/README.md#the-hive-webhooks-configuration)
-
-### [Introduction to KPI](./KPI/README.md)
+- [Configuration](./Configuration/README.md)
+  - [Installation on a virtual machine](./Configuration/README.md#installation-on-a-virtual-machine)
+  - [Installation using Docker](./Configuration/README.md#installation-using-the-docker)
+- [Architecture](./Architecture/README.md)
+  - [Knowledge Collector](./Architecture/README.md#knowledge-collector)
+  - [Asset Collector](./Architecture/README.md#asset-collector)
+  - [Vulnerability Collector](./Architecture/README.md#vulnerability-collector)
+  - [Processing Module](./Architecture/README.md#processing-module)
+- [Administration](./Admin-Panel/README.md)
+  - [Adding vulnerability scanners](./Admin-Panel/README.md#adding-vulnerability-scanners)
+  - [Importing data from the scanner](./Admin-Panel/README.md#importing-data-from-the-scanner)
+  - [Disabling and enabling scanner configurations](./Admin-Panel/README.md#disabling-and-enabling-scanner-configurations)
+  - [Adding an IT resource management database](./Admin-Panel/README.md#adding-an-it-resource-management-database)
+  - [Data import from an IT resource management database](./Admin-Panel/README.md#data-import-from-an-it-resource-management-database)
+  - [Creation of API tokens](./Admin-Panel/README.md#creation-of-api-tokens)
+  - [Support for multiple organisations or groups](./Admin-Panel/README.md#support-for-multiple-organisations-or-groups)
+- [API](./API/README.md)
+- [Integration with IT asset management](./AM-integration/README.md)
+- [Integration with TheHive](./HIVE-Integration/README.md)
+  - [ElastAlert configuration](./HIVE-Integration/README.md#elastalert-configuration)
+  - [Creating alerts](./HIVE-Integration/README.md#creating-alerts)
+  - [Responder configuration](./HIVE-Integration/README.md#responder-configuration)
+  - [The Hive webhooks configuration](./HIVE-Integration/README.md#the-hive-webhooks-configuration)
+- [Introduction to KPI](./KPI/README.md)

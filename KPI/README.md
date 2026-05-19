@@ -1,33 +1,48 @@
 # Introduction to KPI
-KPI (Key Performance Indicator) - indicators that allow you to assess the performance and success in the assumption of the goals being performed. From the vulnerability management point of view, KPIs indicate the level of performance in VM processes, as well as AM and PM. VMC has developed capabilities of reporting metrics, the limitation of which may only be the user's creativity and knowledge and proficiency in filtering data using built-in queries.
 
-The data is presented on Dashboards that can be created on the basis of a specific categorization.
-![Sample Dasboard](./sample_dash.png)
+KPI (Key Performance Indicator) — metrics that quantify the performance and
+success of business goals. From a vulnerability-management perspective KPIs
+reveal the level of performance of the VM, AM and PM processes. VMC's
+reporting capabilities are limited mostly by the user's creativity and
+fluency in Kibana queries.
 
-Select the Dashboard from the menu on the left in the Dashboard tab.
-![Step 1](./step_1.png)
+Data is presented on dashboards that can be assembled around any
+categorisation.
 
-Then, to create a new one, click **Create dashboard**.  
+![Sample dashboard](./sample_dash.png)
 
-![Step 2](./step_2.png) 
+Open the **Dashboard** entry from the side menu:
 
-![Step_3](./step_3.png) 
+![Step 1 — open the Dashboard tab](./step_1.png)
 
-When creating a new metric, we choose the method of data visualization.
-![Visualization types](./step_4.png)
+To create a new dashboard click **Create dashboard**.
 
-In this example, we will select the "Metric" visualization and then the index on which the data will be filtered.
-![Selection of available indexes](./step_5.png)
+![Step 2 — Create dashboard button](./step_2.png)
+
+![Step 3 — empty dashboard ready for panels](./step_3.png)
+
+When creating a new metric, pick the visualisation type:
+
+![Visualisation types](./step_4.png)
+
+In this example we pick the **Metric** visualisation and then the index that
+will be queried:
+
+![Index selection](./step_5.png)
 ![Metric options](./step_6.png)
 
-|Name                         | Description                                                      |
-|-----------------------------|------------------------------------------------------------------|
-|Aggregation                  |extract fields from documents to generate selected data value: <br>**Average** - Average value.Count - The total number of documents that match the query, which allows you to visualize the number of documents in the tray. The number is the default. <br> **Max** - The highest value.<br>**Median** - Value in 50%<br>**Min** - The Lowest value.<br>**Percentile ranks** - Returns the percentile rankings for the values in the specified numeric field. Select a numeric field from the drop-down list, and then specify one or more percentile rank values in the Values fields.<br>**Percentiles** - Divides the values in a numeric field into specified percentile ranges. Select a field from the drop-down list, and then specify one or more ranges in the Percentiles fields.<br>**Standard Deviation** - Requires a numeric field. Uses extended aggregation of statistics.<br>**Sum** - Total value.<br>**Top hit** - Returns a sample of single documents. When Top Hit aggregation is matched against more than one document, you must choose the value concatenation technique. Techniques include average, minimum, maximum, and sum.<br>**Unique Count** - Number of unique results.
-|Field                        |at this point, the field whose metric we will present is selected
-|Custom Label                 |The name of the metric
-|Advanced                     |in this field you can add a batch written in JSON
+| Name         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Aggregation  | Aggregates field values from documents into a single metric value. Supported aggregations: **Average** (average value), **Count** (total number of matching documents — default), **Max** (highest value), **Median** (value at the 50th percentile), **Min** (lowest value), **Percentile ranks** (percentile rankings for values in a numeric field — pick the field and one or more *Values*), **Percentiles** (divides values into specified percentile ranges — pick the field and one or more *Percentiles*), **Standard deviation** (requires a numeric field; uses extended statistics aggregation), **Sum** (total value), **Top hit** (returns a sample of individual documents; if Top Hit matches more than one document, pick a concatenation technique — average / min / max / sum), **Unique count** (number of unique results).                                                                                            |
+| Field        | The document field whose metric is being presented.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Custom label | Display name of the metric.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| Advanced     | Optional JSON payload appended to the aggregation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 
-In the Buckets tab, we choose how the data is to be divided or filtered. After selecting all options, we save the metric.
-![Save the metric](./step_7.png)
+In the **Buckets** tab pick how the data is sliced or filtered, then save
+the metric:
 
-After creating the metric, it will appear on the selected dashboard. Metrics can be freely removed, added, and the size and position of the graphs presenting them can be changed.
+![Saving the metric](./step_7.png)
+
+After saving, the metric appears on the dashboard. Metrics can be added,
+removed and resized freely; the position of their panels can be adjusted by
+drag-and-drop.

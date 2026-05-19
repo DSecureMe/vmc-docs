@@ -1,258 +1,285 @@
 # Administration
-The operations that are performed in the context of the VMC administrator to configure and add parameters necessary for the proper functioning of the system are discussed below. Configuration changes are made at the url `http://VMC_address`, where VMC_address is the dedicated domain or IP address of the machine where the software is installed.
+
+The operations performed in the context of the VMC administrator to configure
+and add the parameters necessary for the system to function correctly are
+discussed below. Configuration changes are made at the URL
+`http://VMC_address`, where `VMC_address` is the dedicated domain or IP
+address of the machine on which the software is installed.
 
 ![Login page to the VMC admin panel](./login.png)
 
 ## Adding vulnerability scanners
-VMC software includes integration with OpenVas and Nessus vulnerability scanners. Adding a scanner instance is done in the Scanners / Configs table by pressing the ADD CONFIG button in the upper right corner. Communication with the Nessus scanner takes place using the available REST API, while communication with the OpenVas scanner takes place using the OMP and GVM protocols, which requires additional settings on the side of the scanner administrator.
 
-*SCANNERS tab*
-![SCANNERS tab](./2.png)
+VMC integrates with the OpenVAS and Nessus vulnerability scanners. A scanner
+instance is added in the **Scanners → Configs** table by pressing the **+ ADD
+CONFIG** button in the upper-right corner. Communication with Nessus goes
+through its REST API; communication with OpenVAS goes through the OMP and GVM
+protocols, which require additional settings on the scanner administrator's
+side.
 
-*Scanners -> Configs tab*
-![Scanners -> Configs tab](./3.png)
+![Scanners administration](./2.png)
 
-*Adding a Scanner Configuration*
+![Scanners → Configs tab](./3.png)
+
 ![Adding a Scanner Configuration](./4.png)
 
-In the **ADD CONFIG** panel, enter the correct scanner configuration:
+In the **ADD CONFIG** panel, enter the scanner configuration:
 
-| Name    | Description
-|---------|-----
-|Name     |The name of the scanner instance|
-|Enabled  |Configuration enabled (true by default)
-|Schema   |Connection protocol (selectable from http and https)
-|Host     |The IP address of the machine on which the scanner is installed
-|Port     |The port on which the scanner is listening
-|Filter   |Optional. In the case of the Nessus scanner, it allows you to specify with regex which folders with scans should be taken into account. For the OpenVas scanner, the filters act as the functionality of the tags built into the scanner.
-|Username |Privileged user's account name in the scanner app
-|Password |User account password
-|Insecure |SSL Certificate Verification Parameter (Disabled by default)
-|Tenant   |Tenant with which the data from the vulnerability scans will be associated
-|Scanner  |Vulnerability scanner (to choose from OpenVAS and Nessus)
+| Name     | Description                                                                                                                                                              |
+|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Name     | Name of the scanner instance.                                                                                                                                            |
+| Enabled  | Configuration enabled (`true` by default).                                                                                                                               |
+| Schema   | Connection protocol — `http` or `https`.                                                                                                                                 |
+| Host     | IP address of the machine on which the scanner is installed.                                                                                                             |
+| Port     | Port on which the scanner is listening.                                                                                                                                  |
+| Filter   | Optional. For Nessus, a regex that selects which folders of scans are taken into account. For OpenVAS, behaves as the scanner's built-in tag functionality.              |
+| Username | Privileged user account name in the scanner application.                                                                                                                 |
+| Password | User account password.                                                                                                                                                   |
+| Insecure | SSL certificate verification parameter (disabled by default).                                                                                                            |
+| Tenant   | Tenant to which the data from the vulnerability scans will be associated.                                                                                                |
+| Scanner  | Vulnerability scanner — OpenVAS or Nessus.                                                                                                                               |
 
 Example:
 
 ![Sample filling in a new scanner configuration](./5.png)
 
-After filling in all the fields, save the configuration by clicking the **Save** button on the left side of the form. If all the data is correct, the following information will appear:
+After filling in all the fields, save the configuration by clicking **Save**
+on the bottom-right of the form. On success, a confirmation message appears:
 
-The config “*The name of the scanner instance*” was added successfully.
+> The config "*\<scanner instance name\>*" was added successfully.
 
-![A message confirming that the configuration has been added successfully](6.png)
+![Configuration added successfully](./6.png)
 
----
-<span style="color:red">**_NOTE:_**</span> 
-
-By default, GVM listens on the unix socket, so in order to connect VMC with OpenVas you have to improve your gvmd configuration.
-In the file `/etc/lib/systemd/system/gvmd.service` change the line:
-```
-ExecStart=/usr/sbin/gvmd --osp-vt-update=/run/ospd/ospd.sock --listen-group=_gvmchange
-```
-to:
-```
-ExecStart=/usr/sbin/gvmd --osp-vt-update=/run/ospd/ospd.sock --listen-group=_gvm --listen 0.0.0.0 --port 9390
-```
-then reload and restart gvmd:
-```
-systemctl daemon-reload 
-systemctl restart  gvmd.service
-```
-
-a new port should appear:
-![image](https://user-images.githubusercontent.com/673031/163448870-c703fe02-bb0c-45df-8ae5-a4bbd0e8ea10.png)
-
-VMC openvas configuration should look like this:
-![image](https://user-images.githubusercontent.com/673031/163449032-b599c1c2-950c-4b98-9357-c005b10817ea.png)
-```
-ExecStart=/usr/sbin/gvmd --osp-vt-update=/run/ospd/ospd.sock --listen-group=_gvmchange
-```
-to:
-```
-ExecStart=/usr/sbin/gvmd --osp-vt-update=/run/ospd/ospd.sock --listen-group=_gvm --listen 0.0.0.0 --port 9390
-```
-then reload daemon and restart gvmd:
-```
-systemctl daemon-reload 
-systemctl restart gvmd.service
-```
-
-a new port should appear:
-![image](https://user-images.githubusercontent.com/673031/163448870-c703fe02-bb0c-45df-8ae5-a4bbd0e8ea10.png)
-
-The VMC configuration for OpenVas should look like this:
-![image](https://user-images.githubusercontent.com/673031/163449032-b599c1c2-950c-4b98-9357-c005b10817ea.png)
-
----
+> [!NOTE]
+> By default GVM listens on a UNIX socket, so to connect VMC to OpenVAS the
+> `gvmd` configuration must expose it on TCP. In `/etc/lib/systemd/system/gvmd.service`,
+> change:
+>
+> ```ini
+> ExecStart=/usr/sbin/gvmd --osp-vt-update=/run/ospd/ospd.sock --listen-group=_gvm
+> ```
+>
+> to:
+>
+> ```ini
+> ExecStart=/usr/sbin/gvmd --osp-vt-update=/run/ospd/ospd.sock --listen-group=_gvm --listen 0.0.0.0 --port 9390
+> ```
+>
+> then reload and restart:
+>
+> ```bash
+> systemctl daemon-reload
+> systemctl restart gvmd.service
+> ```
 
 ## Importing data from the scanner
-To load data from a correctly added scanner, go to the **Scanners/Configs** tab, select the checkbox next to the previously added scanner from which you want to import data and select the **Import selected configs** option from the list, and then click **GO**.
+
+To load data from a correctly added scanner, go to **Scanners → Configs**,
+tick the checkbox next to the scanner you want to import from, choose
+**Import selected configs** from the action dropdown and click **GO**.
 
 ![Data import from the scanner](./7.png)
 
-If the data import is possible, the following message will appear on the screen: *Import started*.
+If the import can start, *Import started* appears at the top of the page:
 
 ![Message about successful start of import](./8.png)
 
-If the system is already importing data (for a given tenant) or performing calculations for the vulnerability and it will not be possible to start a new import, a message will appear in the same place with the information:
+If a tenant-scoped import or vulnerability calculation is already in
+progress, a warning is shown instead:
 
 ![An example error message](./9.png)
 
-Additionally, when importing data from the scanner, additional statuses assigned to a specific configuration are available:
+Each configuration also carries a status that reflects the latest import:
 
-|Name       |Description
-|-----------|--------
-|PENDING    |Waiting for the import to start
-|IN PROGRESS|Import in progress
-|ERROR      |Import finished with an error, the error description can be found in the configuration at the bottom in the "Error description" field
-|SUCCESS    |Successful import
+| Status      | Description                                                                                       |
+|-------------|---------------------------------------------------------------------------------------------------|
+| PENDING     | Waiting for the import to start.                                                                  |
+| IN PROGRESS | Import in progress.                                                                               |
+| ERROR       | Import finished with an error; the details are in the configuration's "Error description" field. |
+| SUCCESS     | Import finished successfully.                                                                     |
 
+## Disabling and enabling scanner configurations
 
-## Disabling and Enabling the Scanner Configuration
-To turn off the configuration or turn it on again, go to the **Scanners/Configs** tab, select the checkbox next to the previously added scanner, turn it off / on and select the option:
-* Enable selected configs - for enable configuration
-* Disable selected configs - to disable configuration
+To toggle a configuration on or off, open **Scanners → Configs**, tick the
+checkbox next to the configurations you want to update and choose one of:
 
-And then click **GO** button
+- **Enable selected configs** — enable the configuration.
+- **Disable selected configs** — disable the configuration.
+- **Toggle activity of selected configs** — flip the current state.
 
-![Option to change the status of Enabled/Disabled](./10.png)
+Then click **GO**.
 
-The configuration status will be shown in the **Enabled** column by a red sign - inactive, and a green sign - active.
+![Option to change the Enabled / Disabled status](./10.png)
 
-![Disabled and Enabled configuration view](./11.png)
+The **Enabled** column shows a green indicator when the configuration is
+active and a red indicator when it is disabled.
 
-Configurations can be turned on and off at will.
+![Disabled and Enabled configurations side by side](./11.png)
+
+Configurations can be turned on and off freely at any time.
 
 ## Adding an IT resource management database
-The VMC software integrates with an IT resource management database called Ralph. Adding is done in the side menu after pressing the **ASSET MANAGEMENT** -> **Configs** button.
 
-![Configuration of connection with the asset database](./12.png)
+VMC integrates with the Ralph IT-asset-management database. The integration is
+configured under **Asset sources → Ralph** in the sidebar.
 
-In the **Configs** panel, click the + button in the upper right corner and then enter the correct configuration of the resource base.
+![Configuration of the connection to the asset database](./12.png)
 
-![Adding a new configuration](./13.png)
+In the **Configs** panel, click the **+** button in the upper-right corner
+and fill in the asset-base configuration:
 
-| Name   | Description |
-|--------|-------------|
-|Name    |The name of the resource database instance
-|Schema  |Connection protocol (selectable from http and https)
-|Host    |The IP address of the machine where the resource base is installed
-|Port    |The port on which the resource base is listening
-|Username|Privileged user account name in the resource base application
-|Password|User account password
-|Insecure|SSL Certificate Verification Parameter (Disabled by default)
-|Tenant  |The tenant to which the resource database data will be associated
+![Adding a new Ralph configuration](./13.png)
+
+| Name     | Description                                                              |
+|----------|--------------------------------------------------------------------------|
+| Name     | Name of the resource-database instance.                                  |
+| Schema   | Connection protocol — `http` or `https`.                                 |
+| Host     | IP address of the machine on which the resource base is installed.       |
+| Port     | Port on which the resource base is listening.                            |
+| Username | Privileged user account name in the resource-base application.           |
+| Password | User account password.                                                   |
+| Insecure | SSL certificate verification parameter (disabled by default).            |
+| Tenant   | Tenant to which the resource-database data will be associated.           |
 
 Example:
 
-![Sample configuration](./14.png)
+![Sample Ralph configuration](./14.png)
 
-After filling in all the fields, save the configuration by clicking the **Save** button on the left side of the form. If all the data is correct, a message will appear:
+After filling in all the fields, save the configuration. On success:
 
-The config “*The name of the asset database instance*” was added successfully.
+> The config "*\<asset database instance name\>*" was added successfully.
 
 ![Correct addition of a new configuration](./15.png)
 
 ## Data import from an IT resource management database
-To load data from a correctly added resource database, go to the **ASSET MANAGEMENT** -> **Configs** tab, select the checkbox next to the previously added database from which we want to import data, and then select Import selected configs from the drop-down menu and click the **Go** button.
+
+To pull data from a correctly added Ralph instance, go to **Asset sources →
+Ralph**, tick the checkbox next to the configuration you want to import from,
+choose **Import selected configs** from the action dropdown and click **Go**.
 
 ![Data import from Ralph](./16.png)
 
-If the data import is possible, the following message will appear on the screen: *Import started*.
+If the import can start, *Import started* appears at the top of the page:
 
 ![Import started correctly](./17.png)
 
-If the system is already importing data (for a given tenant) or performing vulnerability calculations, and it will not be possible to start a new import, a message will appear in the same place with the information:
+If an import or vulnerability calculation is already running, a warning is
+shown instead:
 
 ![An example error when starting the import](./18.png)
 
-Additionally, when importing data from the scanner, additional statuses assigned to a specific configuration are available:
+The same status fields as the scanner imports apply (`PENDING`, `IN PROGRESS`,
+`ERROR`, `SUCCESS`).
 
-|Name        | Description
-|------------|-------------
-|PENDING     |Waiting for the import to start
-|IN PROGRESS |Import in progress
-|ERROR       |Import finished with an error, the error description can be found in the configuration at the bottom in the "Error description" field
-|SUCCESS     |Successful import
+## Creation of API tokens
 
-## Creation of API Tokens
-
-VMC allows integration with external services using a dedicated API. To do this, create a Token that is assigned to a specific user. A new token is added in the **Auth Token/Tokens** tab.
+VMC supports integration with external services through a dedicated REST API.
+To enable it, create a token bound to a specific user under **API → API
+tokens**.
 
 ![Adding a new token](./19.png)
 
-In the **Tokens** panel, click the + button in the upper right corner and then select the user for whom the Token will be generated.
+In the **Tokens** panel, click the **+** button in the upper-right corner and
+select the user for whom the token will be generated.
 
 ![Save token settings](./20.png)
 
-After selecting the **Save** button, the generated token will appear in the admin panel.
+After **Save**, the generated token is displayed in the admin panel.
 
-## Support for Multiple Organizations or Groups
-Data separation and indexation using tenants allows for effective management of data assigned to individual organizations. The addition is made in the **ELASTICSEARCH/Tenants** table after pressing the **ADD TENANT** button in the upper right corner.
+## Support for multiple organisations or groups
+
+Data separation between organisations is achieved through tenants. Each
+tenant owns a logical slice of the Elasticsearch indexes. Tenants are added
+in **Tenants → Tenants**, button **+ ADD TENANT** in the upper-right corner.
 
 ![Tenants](./21.png)
 
-Before adding a tenant, you must have an elasticsearch configuration (prefix), in the absence of it, you can do it by going to the **ELASTICSEARCH/Configs** tab, and then selecting the **ADD CONFIG** option
+Before adding a tenant an **Elasticsearch config** (a prefix) must exist. If
+none has been defined, create one in **Tenants → Elasticsearch configs** via
+**+ ADD CONFIG**.
 
 ![Tenant name and the prefix](./22.png)
 
-The correct Tenants configuration must be entered in the **ELASTICSEARCH/Tenants** table.
+Fill in the tenant configuration:
 
-|Name                  |Description
-|----------------------|---
-|Name                  |Name of the tenant that will be added to the indexes in Elasticsearch
-|Slug name             | Name used to distinguish between tenant indexes in Elasticsearch
-|Elasticsearch config  |The checkbox in which we select the configuration previously defined in the ELASTICSEARCH/Configs table.
+| Name                  | Description                                                                                  |
+|-----------------------|----------------------------------------------------------------------------------------------|
+| Name                  | Tenant name; becomes a component of the Elasticsearch index name.                            |
+| Slug name             | Slug used to distinguish between tenant indexes in Elasticsearch (lowercase alphanumeric).   |
+| Elasticsearch config  | The previously defined configuration from **Tenants → Elasticsearch configs**.               |
 
 Example:
 
 ![Choice of tenant configuration](./23.png)
 
-After filling in all the fields, save the configuration. If the operation is successful, the following message will appear on the screen: The tenant “Name” was added successfully.
+After saving, on success:
+
+> The tenant "*\<Name\>*" was added successfully.
 
 ![Information about the correct adding of the tenant](./24.png)
 
-After adding and configuring the tenant correctly, the indexes will be created in ElasticSearch in the form:
-[prefix].[slugname].[document]
+Once the tenant is added, the corresponding Elasticsearch indexes are created
+using the pattern:
+
+```
+<prefix>.<slug-name>.<document>
+```
 
 ## Setting up schedules with tasks
-VMC has job scheduling functionality where the system administrator can define the exact time or time interval for tasks such as updating data from vulnerability scanners or asset database.
+
+VMC has a built-in scheduler that lets the administrator define an exact time
+or interval for tasks such as updating data from vulnerability scanners or
+the asset database.
 
 ### Setting the time interval
-Setting the time interval or a specific date and time of the defined task is done in the **Periodic Tasks** table. For example, adding a time interval to the **Periodic Tasks** -> **Intervals table**.
 
-![Time interval setting](./25.png)
+Time intervals and crons are managed under **Periodic tasks → Tasks**. For
+example, to add a recurring 6-hour interval go to **Periodic tasks →
+Intervals**.
 
-After pressing the + button in the upper right corner, it is necessary to complete the required data.
+![Interval list](./25.png)
+
+Click the **+** button in the upper-right corner and fill in the required
+data.
 
 ![Setting the intervals](./26.png)
 
-### Assign a task to a defined time
-After correct configuration and defining the time for the task, you can start to define a specific schedule in the **Periodic Tasks/Periodic** tasks table. After pressing the **ADD PERIODIC TASK** button in the upper right corner, it is necessary to complete the required data.
+### Assign a task to a defined interval
 
-![Adding a new time slot](./27.png)
+Once the interval exists, define a specific schedule under **Periodic tasks →
+Tasks**. Click **+ ADD PERIODIC TASK** in the upper-right corner and fill in
+the required data.
+
+![Adding a new periodic task](./27.png)
 
 ![New task settings view](./28.png)
 
+### Predefined tasks
 
-### The list of predefined tasks
-When defining a schedule with tasks as Task (registered) value, you can select the following tasks from the list:
+When picking a value for **Task (registered)**, the following tasks are
+available:
 
-|Name | Description
-|-----|------------
-|Snapshot              |Create a historical copy of your data.
-|Update knowledge base |Retrieving data obtained from the database of vulnerabilities and weaknesses.
-|Update all assets     |Downloading data received from the asset database.
-|Update all scanners   |Retrieving data received from the vulnerability scanner.
+| Name                  | Description                                                            |
+|-----------------------|------------------------------------------------------------------------|
+| Snapshot              | Create a historical copy of your data.                                 |
+| Update knowledge base | Retrieve data from the database of vulnerabilities and weaknesses.     |
+| Update all assets     | Download data from the asset database.                                 |
+| Update all scanners   | Retrieve data from the vulnerability scanner.                          |
 
-### Verification of the results of planned tasks
-The results of scheduled tasks defined in the **Periodic Tasks/Periodic** tasks table are presented in the **Celery Results/Task** results table. The table contains the task ID, name, execution date and status.
+### Verification of scheduled-task results
+
+Results of scheduled tasks are listed under **Periodic tasks → Task results**
+(the `django_celery_results` table). The list contains the task ID, name,
+execution date and status.
 
 ![Preview of completed tasks](./29.png)
 
 ## User administration
-VMC enables user and group level authorization management. Adding a new user is in **AUTHENTICATION AND AUTHORIZATION\User** after pressing the **ADD** button on the right.
+
+VMC supports user- and group-level authorisation management. New users are
+added under **Users → Users** by pressing **+ ADD USER** in the upper-right
+corner.
 
 ![User accounts](./30.png)
 
-![dding a new user](./31.png)
+![Adding a new user](./31.png)

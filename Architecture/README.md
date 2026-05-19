@@ -1,6 +1,6 @@
 # Architecture
 
-This section describes the architecture and operation of the VMC software which consists of four main modules: Knowledge Collector, Asset Collector, Vulnerability Collector and Processing Module. Figure below shows the flow of information. The first three modules are responsible for collecting data from various parts of the network, while the fourth, computational one, is responsible for delivering results as close to real time as possible.
+This section describes the architecture and operation of the VMC software, which consists of four main modules: **Knowledge Collector**, **Asset Collector**, **Vulnerability Collector** and **Processing Module**. The figure below shows the flow of information. The first three modules collect data from various parts of the network; the fourth, computational module is responsible for delivering results as close to real time as possible.
 
 ![VMC Architecture](./arch-vmc.png)
 
@@ -13,6 +13,7 @@ The entire solution has been prepared for operations in the cloud environment an
 In order to simplify the principle of operation and the VMC architecture, the data processing process has been divided into individual stages following one another.
 
 ## Knowledge Collector
+
 The Knowledge Collector module is responsible for downloading, updating and normalizing information from publicly available databases on known exploits, weaknesses (CWE - Common Weakness Enumeration) and vulnerabilities (CVE - Common Vulnerabilities and Exposures). Information sources include the National Vulnerabilities Database (NVD) and the Exploits Database. Below is the structure of the document responsible for storing information on the url of a published exploit, the structure responsible for storing information about the software (CPE - Common Platform Enumeration), and a standardized structure for the vulnerability, which also contains relations to the above-described documents. The document stores the entire vector that makes up the vulnerability assessment, in order to speed up the calculations and enable easier searching for the vulnerability by its characteristic features, e.g. the possibility of remote exploitation of the vulnerability. After passing the normalization process, the collected information can be displayed in the presentation layer.
 
 ```python
@@ -97,6 +98,7 @@ In the document representing the collected information on vulnerabilities (CVE),
 ![Kibana Sample](./kibana_sample.png)
 
 ## Asset Collector
+
 The Asset Collector module is responsible for managing data on detected assets and assets defined for the monitored network. It has two data sources. The first source is the Ralph tool, a system that meets the requirements of corporate networks allowing for the management of the life cycle of a particular component of the environment. The second source of data is a vulnerability scanner which, in addition to scanning, has the functionality of detecting IT infrastructure components. In this way, VMC is able to inform the operator about the discrepancy between the data contained in the asset database and the information provided with the scan results. Listing below shows how the asset is represented in the database. The confidentiality requirement, integrity requirement, availability requirement fields allow you to calculate an environmental risk assessment for individual assets. The business owner and technical owner fields are used to assign specific people or organizational units responsible for particular assets, both from a technical and business perspective. If any of the above-mentioned values is missing, an alarm will be generated in the system, informing the operator that the data is inconsistent.
 
 ```python
@@ -116,7 +118,7 @@ class AssetDocument:
     tags = Keyword()
     url = Keyword()
     source = Keyword()
-   last_scan_date = Date()
+    last_scan_date = Date()
 ```
 
 In the document representing the collected information about the asset, we distinguish the following fields.
@@ -141,7 +143,9 @@ In the document representing the collected information about the asset, we disti
 |last_scan_date              |last scan date
 
 ## Vulnerability Collector
+
 The Vulnerability Collector module is responsible for downloading, updating and normalizing data from Nessus and OpenVas vulnerability scanners. In order to optimize the results, during data processing, vulnerabilities classified as informational are ignored. Listing below shows the structure of the document of the detected vulnerability, after being processed by the module. This structure includes information such as the port number, protocol, service name, vulnerability description and information on how the vulnerability should be fixed. This information is a recommendation for system owners and other people implementing the corrective mechanisms.
+
 ```python
 class VulnerabilityDocument:
     port = Integer()
@@ -186,4 +190,5 @@ In the document describing the vulnerability in the system found, we distinguish
 |scan_date                    |date of scanning, detection of the vulnerability
 
 ## Processing Module
-Processing Module is responsible for making calculations and updating the assessment of detected vulnerabilities, taking into account data obtained from previous modules. For each new or updated vulnerability, the obtained calculation results are entered in the fields environmental score v2 for CVSS 2.0 and environmental score v3 for CVSS 3.0. Additionally, in the fields environmental score vector v2 and environmental score vector v3 there is a vector notation of the vulnerability assessment, thanks to which it is possible to easily analyze each of the individual values affecting the final environmental assessment.
+
+The Processing Module is responsible for making calculations and updating the assessment of detected vulnerabilities, taking into account data obtained from previous modules. For each new or updated vulnerability, the obtained calculation results are entered in the fields environmental score v2 for CVSS 2.0 and environmental score v3 for CVSS 3.0. Additionally, in the fields environmental score vector v2 and environmental score vector v3 there is a vector notation of the vulnerability assessment, thanks to which it is possible to easily analyze each of the individual values affecting the final environmental assessment.
