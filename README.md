@@ -1,5 +1,18 @@
 # OWASP Vulnerability Management Center — Documentation
 
+> [!WARNING]
+> **This software is NOT a release candidate and is NOT production-ready.**
+>
+> The code in this repository (and its dependencies) may contain
+> vulnerabilities. The maintainers provide no warranty of any kind and
+> accept no liability for any defect, vulnerability, data loss, security
+> incident or other damage resulting from its use.
+>
+> You install, run, evaluate and operate this software **at your own
+> risk**. Do not deploy it in a production environment, and do not
+> expose it to untrusted networks without an independent security
+> review.
+
 ## Introduction
 
 This document presents the OWASP Vulnerability Management Center (VMC)
@@ -119,7 +132,7 @@ After `make demodata` succeeds, the admin panel is available at
 
 - [Configuration](./Configuration/README.md)
   - [Installation on a virtual machine](./Configuration/README.md#installation-on-a-virtual-machine)
-  - [Installation using Docker](./Configuration/README.md#installation-using-the-docker)
+  - [Installation using Docker](./Configuration/README.md#installation-using-docker)
 - [Architecture](./Architecture/README.md)
   - [Knowledge Collector](./Architecture/README.md#knowledge-collector)
   - [Asset Collector](./Architecture/README.md#asset-collector)
@@ -139,5 +152,5 @@ After `make demodata` succeeds, the admin panel is available at
   - [ElastAlert configuration](./HIVE-Integration/README.md#elastalert-configuration)
   - [Creating alerts](./HIVE-Integration/README.md#creating-alerts)
   - [Responder configuration](./HIVE-Integration/README.md#responder-configuration)
-  - [The Hive webhooks configuration](./HIVE-Integration/README.md#the-hive-webhooks-configuration)
+  - [TheHive webhooks configuration](./HIVE-Integration/README.md#thehive-webhooks-configuration)
 - [Introduction to KPI](./KPI/README.md)
